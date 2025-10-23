@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tema 5 - Práctica DOM - Alumno</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <!-- CSS personalizado -->
+  <link href="custom.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container my-5">
+    <h1 class="display-4 text-primary mb-4">Tema 5 - Manipulación del DOM</h1>
+
+    <!-- Ejercicio 1 - EJEMPLO + contenedor único #contenido -->
+    <div id="ej1" class="card mb-5">
+      <div class="card-header">
+        <h2 class="card-title h4 mb-0">Ejercicio 1 - Selectores y modificación</h2>
+      </div>
+      <div class="card-body">
+        <div id="contenido" class="mb-3">
+          <p class="mb-2">Primer párrafo de ejemplo.</p>
+          <p class="mb-2">Segundo párrafo de ejemplo.</p>
+          <p class="mb-2">Tercer párrafo de ejemplo.</p>
+        </div>
+        <button id="btn-ej1" class="btn btn-primary">Aplicar cambios del Ejercicio 1</button>
+      </div>
+    </div>
+
+    <!-- Ejercicio 2 - Usará el MISMO #contenido anterior -->
+    <div class="card shadow-sm my-3" id="ej2">
+      <div class="card-header d-flex flex-wrap align-items-center justify-content-between gap-2">
+        <strong>Ejercicio 2 — Crear y eliminar nodos</strong>
+        <div class="btn-group" role="group" aria-label="Acciones Ejercicio 2">
+          <button type="button" class="btn btn-primary" id="btn-add">Añadir párrafo</button>
+          <button type="button" class="btn btn-outline-danger" id="btn-remove">Eliminar último párrafo</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="text-muted mb-0">Los párrafos se añadirán/eliminarán del contenedor del Ejercicio 1.</p>
+      </div>
+    </div>
+
+    <!-- Ejercicio 3 - Explicación (afecta también a #contenido) -->
+    <div class="card shadow-sm my-3" id="ej3">
+      <div class="card-header">
+        <strong>Ejercicio 3 — Manejo de eventos</strong>
+      </div>
+      <div class="card-body">
+        <p class="text-muted mb-0">
+          Todos los párrafos dentro de <code>#contenido</code> cambian el fondo a gris claro al pasar el ratón y lo restauran al salir.
+        </p>
+      </div>
+    </div>
+
+    <!-- Ejercicio 4 - Inputs y validación -->
+    <div class="card shadow-sm my-3" id="ej4">
+      <div class="card-header"><strong>Ejercicio 4 — Inputs y actualización dinámica</strong></div>
+      <div class="card-body">
+        <form id="form-ej4" class="row g-3">
+          <div class="col-auto">
+            <label for="nuevoTexto" class="col-form-label">Nuevo texto para el primer párrafo:</label>
+          </div>
+          <div class="col-auto">
+            <input type="text" id="nuevoTexto" class="form-control" placeholder="Escribe aquí..." />
+          </div>
+          <div class="col-auto">
+            <button type="button" id="btn-cambiar" class="btn btn-primary mb-3">Cambiar texto</button>
+          </div>
+          <div class="col-12">
+            <span id="msg-ej4" class="text-danger d-none">El campo está vacío</span>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Ejercicio 5 - Lista dinámica -->
+    <div class="card shadow-sm my-3" id="ej5">
+      <div class="card-header"><strong>Ejercicio 5 — Lista dinámica</strong></div>
+      <div class="card-body">
+        <form id="form-ej5" class="row g-3 mb-3">
+          <div class="col-auto">
+            <input type="text" id="tareaInput" class="form-control" placeholder="Nueva tarea..." />
+          </div>
+          <div class="col-auto">
+            <button type="button" id="btn-tarea" class="btn btn-primary mb-3">Añadir tarea</button>
+          </div>
+          <div class="col-auto">
+            <button type="button" id="btn-borrar-completadas" class="btn btn-outline-danger mb-3">Borrar completadas</button>
+          </div>
+        </form>
+        <ul id="listaTareas" class="list-unstyled border rounded p-3"></ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+          crossorigin="anonymous"></script>
+  <!-- JS del alumno -->
+  <script src="main_alumno.js"></script>
+</body>
+</html>
