@@ -18,12 +18,8 @@ function ejecutarEjercicio6(): void {
 
     const persona = new Persona("Carlos", 30);
     
-    // Llamada al método
     persona.presentarse();
 
-    // Intento de acceso a propiedad privada
-    // console.log(persona.edad); 
-    // Error TS: Property 'edad' is private and only accessible within class 'Persona'.
     console.log("Intento de acceder a 'persona.edad' bloqueado por TypeScript (private).");
 }
 

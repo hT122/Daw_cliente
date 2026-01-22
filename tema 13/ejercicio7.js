@@ -5,7 +5,6 @@ class EmpleadoEmpresa {
         this.nombre = nombre;
         this.sueldoMensual = sueldoMensual;
     }
-    // Método propio de la clase
     calcularSueldoAnual() {
         return this.sueldoMensual * 12;
     }

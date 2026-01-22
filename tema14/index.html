@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preferencias de usuario con localStorage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        input[type="color"] {
+            height: 50px;
+            cursor: pointer;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 10px 5px 10px 0;
+            cursor: pointer;
+        }
+
+        .btn-guardar {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .btn-restablecer {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .success-message {
+            display: none;
+            color: green;
+            margin-top: 10px;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Preferencias de Usuario</h1>
+
+        <form id="preferencesForm">
+            <label for="nombre">Nombre:</label>
+            <input 
+                type="text" 
+                id="nombre" 
+                placeholder="Ingresa tu nombre" 
+                required
+            >
+
+            <label for="color">Color de fondo:</label>
+            <input 
+                type="color" 
+                id="color" 
+                value="#ffffff"
+            >
+
+            <button type="submit" class="btn-guardar">Guardar</button>
+            <button type="button" class="btn-restablecer" id="btnRestablecer">Restablecer</button>
+
+            <div class="success-message" id="mensaje">
+                Preferencias guardadas correctamente
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Elementos del DOM
+        const form = document.getElementById('preferencesForm');
+        const inputNombre = document.getElementById('nombre');
+        const inputColor = document.getElementById('color');
+        const btnRestablecer = document.getElementById('btnRestablecer');
+        const mensajeExito = document.getElementById('mensaje');
+
+        // Cargar preferencias al iniciar la página
+        function cargarPreferencias() {
+            const nombre = localStorage.getItem('nombre');
+            const color = localStorage.getItem('colorFondo');
+
+            if (nombre) {
+                inputNombre.value = nombre;
+            }
+
+            if (color) {
+                inputColor.value = color;
+                aplicarColor(color);
+            }
+        }
+
+        // Aplicar el color de fondo
+        function aplicarColor(color) {
+            document.body.style.backgroundColor = color;
+        }
+
+        // Guardar preferencias en localStorage
+        function guardarPreferencias(e) {
+            e.preventDefault();
+
+            const nombre = inputNombre.value.trim();
+            const color = inputColor.value;
+
+            if (nombre === '') {
+                alert('Por favor, ingresa tu nombre');
+                return;
+            }
+
+            // Guardar en localStorage
+            localStorage.setItem('nombre', nombre);
+            localStorage.setItem('colorFondo', color);
+
+            // Aplicar el color
+            aplicarColor(color);
+
+            // Mostrar mensaje de éxito
+            mensajeExito.classList.add('show');
+            setTimeout(() => {
+                mensajeExito.classList.remove('show');
+            }, 2000);
+        }
+
+        // Restablecer preferencias
+        function restablecerPreferencias() {
+            if (confirm('¿Estás seguro de que quieres eliminar todas tus preferencias?')) {
+                localStorage.removeItem('nombre');
+                localStorage.removeItem('colorFondo');
+
+                // Limpiar formulario
+                inputNombre.value = '';
+                inputColor.value = '#ffffff';
+
+                // Restaurar color de fondo
+                aplicarColor('#ffffff');
+
+                alert('✅ Preferencias restablecidas correctamente');
+            }
+        }
+
+        // Event listeners
+        form.addEventListener('submit', guardarPreferencias);
+        btnRestablecer.addEventListener('click', restablecerPreferencias);
+
+        // Cargar preferencias al abrir la página
+        window.addEventListener('DOMContentLoaded', cargarPreferencias);
+    </script>
+</body>
+</html>

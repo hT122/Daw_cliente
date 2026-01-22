@@ -15,7 +15,6 @@ class EmpleadoEmpresa implements Empleado {
         this.sueldoMensual = sueldoMensual;
     }
 
-    // Método propio de la clase
     public calcularSueldoAnual(): number {
         return this.sueldoMensual * 12;
     }

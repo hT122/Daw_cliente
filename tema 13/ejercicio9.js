@@ -10,7 +10,6 @@ function ejecutarEjercicio9() {
             throw new Error("El valor proporcionado no es un texto.");
         }
     }
-    // Caso Correcto
     try {
         const texto = "hola mundo";
         console.log(`Original: ${texto} | Transformado: ${toUpperSeguro(texto)}`);
@@ -18,7 +17,6 @@ function ejecutarEjercicio9() {
     catch (error) {
         console.error(error);
     }
-    // Caso Incorrecto (Número)
     try {
         console.log("Intentando transformar un número...");
         console.log(toUpperSeguro(12345));

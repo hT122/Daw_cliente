@@ -8,7 +8,6 @@ function ejecutarEjercicio8() {
         }
         return numero * 2;
     }
-    // Prueba con número válido
     try {
         const valor = 5;
         console.log(`Doblar ${valor}: ${doblarPositivo(valor)}`);
@@ -16,14 +15,12 @@ function ejecutarEjercicio8() {
     catch (error) {
         console.error("Error capturado:", error);
     }
-    // Prueba con error
     console.log("Intentando doblar -10...");
     try {
         const valor = -10;
         console.log(`Doblar ${valor}: ${doblarPositivo(valor)}`);
     }
     catch (error) {
-        // TypeScript tipa 'error' como any o unknown en el catch
         console.error("¡Se ha producido un error controlado!", error);
     }
 }

@@ -2,7 +2,6 @@
 function ejecutarEjercicio3() {
     console.clear();
     console.log("--- Ejecutando Ejercicio 3: Parámetros Opcionales ---");
-    // Función saludar con parámetro opcional
     function saludar(nombre) {
         if (nombre) {
             console.log(`Hola, ${nombre}`);
@@ -11,7 +10,6 @@ function ejecutarEjercicio3() {
             console.log("Hola, invitado");
         }
     }
-    // Pruebas
     console.log("Llamada con nombre:");
     saludar("Ana");
     console.log("Llamada sin nombre:");
