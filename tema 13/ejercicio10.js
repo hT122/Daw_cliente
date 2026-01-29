@@ -34,4 +34,3 @@ function ejecutarEjercicio10() {
     console.log(`MEDIA GLOBAL DE LA CLASE: ${mediaGlobal.toFixed(2)}`);
 }
 document.getElementById('btn-ex10')?.addEventListener('click', ejecutarEjercicio10);
-//# sourceMappingURL=ejercicio10.js.map
