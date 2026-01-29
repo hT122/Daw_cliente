@@ -1,161 +1,257 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Preferencias de usuario con localStorage</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-        }
-
-        input[type="color"] {
-            height: 50px;
-            cursor: pointer;
-        }
-
-        button {
-            padding: 10px 20px;
-            margin: 10px 5px 10px 0;
-            cursor: pointer;
-        }
-
-        .btn-guardar {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        .btn-restablecer {
-            background-color: #f44336;
-            color: white;
-        }
-
-        .success-message {
-            display: none;
-            color: green;
-            margin-top: 10px;
-        }
-
-        .success-message.show {
-            display: block;
-        }
-    </style>
+    <title>Tarea 14</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <div>
-        <h1>Preferencias de Usuario</h1>
 
-        <form id="preferencesForm">
-            <label for="nombre">Nombre:</label>
-            <input 
-                type="text" 
-                id="nombre" 
-                placeholder="Ingresa tu nombre" 
-                required
-            >
+<body class="container py-4">
 
-            <label for="color">Color de fondo:</label>
-            <input 
-                type="color" 
-                id="color" 
-                value="#ffffff"
-            >
+    <h1 class="text-center mb-4">Tarea: Almacenamiento Web</h1>
 
-            <button type="submit" class="btn-guardar">Guardar</button>
-            <button type="button" class="btn-restablecer" id="btnRestablecer">Restablecer</button>
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">EJERCICIO 1: Preferencias</div>
+        <div class="card-body">
+            <label>Tu Nombre:</label>
+            <input type="text" id="nombreUsuario" class="form-control mb-2">
 
-            <div class="success-message" id="mensaje">
-                Preferencias guardadas correctamente
-            </div>
-        </form>
+            <label>Color de Fondo:</label>
+            <input type="color" id="colorFondo" class="form-control form-control-color mb-3">
+
+            <button class="btn btn-primary" onclick="guardarPreferencias()">Guardar</button>
+            <button class="btn btn-danger" onclick="borrarPreferencias()">Restablecer</button>
+        </div>
     </div>
 
+    <div class="card mb-4">
+        <div class="card-header bg-warning">EJERCICIO 2: Contador de Visitas</div>
+        <div class="card-body text-center">
+            <h3>Visitas: <span id="contadorVisitas">0</span></h3>
+            <button class="btn btn-secondary mt-2" onclick="reiniciarContador()">Poner a Cero</button>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header bg-success text-white">EJERCICIO 3: Datos Temporales (Session)</div>
+        <div class="card-body">
+            <p>Estos datos se borran al cerrar el navegador.</p>
+            <input type="text" id="sesionNombre" class="form-control mb-2" placeholder="Nombre">
+            <input type="text" id="sesionCurso" class="form-control mb-2" placeholder="Curso">
+            <button class="btn btn-success" onclick="guardarSesion()">Guardar en Sesión</button>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header bg-info">EJERCICIO 4: Comparativa</div>
+        <div class="card-body">
+            <input type="text" id="datoComparar" class="form-control mb-2" placeholder="Escribe algo...">
+            <button class="btn btn-primary" onclick="guardarEnLocal()">Guardar en Local</button>
+            <button class="btn btn-success" onclick="guardarEnSesion()">Guardar en Sesión</button>
+
+            <hr>
+            <p>Valor en LocalStorage: <strong id="valorLocal">---</strong></p>
+            <p>Valor en SessionStorage: <strong id="valorSesion">---</strong></p>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header bg-dark text-white">EJERCICIO 5: Lista de Tareas</div>
+        <div class="card-body">
+            <div class="input-group mb-3">
+                <input type="text" id="nuevaTarea" class="form-control" placeholder="Nueva tarea...">
+                <button class="btn btn-primary" onclick="agregarTarea()">Añadir</button>
+            </div>
+            <ul id="listaTareas" class="list-group"></ul>
+        </div>
+    </div>
+
+
     <script>
-        // Elementos del DOM
-        const form = document.getElementById('preferencesForm');
-        const inputNombre = document.getElementById('nombre');
-        const inputColor = document.getElementById('color');
-        const btnRestablecer = document.getElementById('btnRestablecer');
-        const mensajeExito = document.getElementById('mensaje');
-
-        // Cargar preferencias al iniciar la página
+        // --- EJERCICIO 1:
         function cargarPreferencias() {
-            const nombre = localStorage.getItem('nombre');
-            const color = localStorage.getItem('colorFondo');
+            // 1. Recuperamos datos
+            let nombre = localStorage.getItem("miNombre");
+            let color = localStorage.getItem("miColor");
 
+            // Si existen, los ponemos en la pantalla
             if (nombre) {
-                inputNombre.value = nombre;
+                document.getElementById("nombreUsuario").value = nombre;
             }
-
             if (color) {
-                inputColor.value = color;
-                aplicarColor(color);
+                document.getElementById("colorFondo").value = color;
+                document.body.style.backgroundColor = color;
             }
         }
 
-        // Aplicar el color de fondo
-        function aplicarColor(color) {
+        function guardarPreferencias() {
+            let nombre = document.getElementById("nombreUsuario").value;
+            let color = document.getElementById("colorFondo").value;
+
+            localStorage.setItem("miNombre", nombre);
+            localStorage.setItem("miColor", color);
+
+            // Aplicamos el color al momento
             document.body.style.backgroundColor = color;
+            alert("Preferencias guardadas");
         }
 
-        // Guardar preferencias en localStorage
-        function guardarPreferencias(e) {
-            e.preventDefault();
+        function borrarPreferencias() {
+            localStorage.removeItem("miNombre");
+            localStorage.removeItem("miColor");
+            location.reload();
+        }
 
-            const nombre = inputNombre.value.trim();
-            const color = inputColor.value;
 
-            if (nombre === '') {
-                alert('Por favor, ingresa tu nombre');
-                return;
+        // --- EJERCICIO 2: CONTADOR ---
+        function cargarContador() {
+            let visitas = localStorage.getItem("visitas");
+            // Si no hay visitas (es la primera vez), es nulo, así que lo ponemos a 0
+            if (visitas === null) {
+                visitas = 0;
             }
-
-            // Guardar en localStorage
-            localStorage.setItem('nombre', nombre);
-            localStorage.setItem('colorFondo', color);
-
-            // Aplicar el color
-            aplicarColor(color);
-
-            // Mostrar mensaje de éxito
-            mensajeExito.classList.add('show');
-            setTimeout(() => {
-                mensajeExito.classList.remove('show');
-            }, 2000);
+            // Convertimos a número y sumamos 1
+            let numeroVisitas = parseInt(visitas) + 1;
+            // Guardamos el nuevo número
+            localStorage.setItem("visitas", numeroVisitas);
+            // Mostramos en pantalla
+            document.getElementById("contadorVisitas").innerText = numeroVisitas;
         }
 
-        // Restablecer preferencias
-        function restablecerPreferencias() {
-            if (confirm('¿Estás seguro de que quieres eliminar todas tus preferencias?')) {
-                localStorage.removeItem('nombre');
-                localStorage.removeItem('colorFondo');
+        function reiniciarContador() {
+            localStorage.setItem("visitas", 0);
+            document.getElementById("contadorVisitas").innerText = 0;
+        }
+        // --- EJERCICIO 3: SESIÓN ---
+        function guardarSesion() {
+            let nombre = document.getElementById("sesionNombre").value;
+            let curso = document.getElementById("sesionCurso").value;
 
-                // Limpiar formulario
-                inputNombre.value = '';
-                inputColor.value = '#ffffff';
+            sessionStorage.setItem("s_nombre", nombre);
+            sessionStorage.setItem("s_curso", curso);
+            alert("Guardado temporalmente");
+        }
 
-                // Restaurar color de fondo
-                aplicarColor('#ffffff');
+        // Función pequeña para recuperar datos al cargar
+        function cargarSesion() {
+            let nombre = sessionStorage.getItem("s_nombre");
+            let curso = sessionStorage.getItem("s_curso");
 
-                alert('✅ Preferencias restablecidas correctamente');
+            if (nombre) document.getElementById("sesionNombre").value = nombre;
+            if (curso) document.getElementById("sesionCurso").value = curso;
+        }
+
+
+        // --- EJERCICIO 4: COMPARATIVA ---
+        function guardarEnLocal() {
+            let dato = document.getElementById("datoComparar").value;
+            localStorage.setItem("datoComparar", dato);
+            mostrarComparativa();
+        }
+
+        function guardarEnSesion() {
+            let dato = document.getElementById("datoComparar").value;
+            sessionStorage.setItem("datoComparar", dato);
+            mostrarComparativa();
+        }
+
+        function mostrarComparativa() {
+            // Leemos y mostramos directamente
+            document.getElementById("valorLocal").innerText = localStorage.getItem("datoComparar");
+            document.getElementById("valorSesion").innerText = sessionStorage.getItem("datoComparar");
+        }
+
+
+        // EJERCICIO 5:
+
+        // Esta función lee el array de localStorage
+        function obtenerArrayTareas() {
+            let textoJson = localStorage.getItem("listaTareas");
+            if (textoJson == null) {
+                return []; // Si no hay nada, devuelve array vacío
+            } else {
+                return JSON.parse(textoJson); // Convierte texto a Array real
             }
         }
 
-        // Event listeners
-        form.addEventListener('submit', guardarPreferencias);
-        btnRestablecer.addEventListener('click', restablecerPreferencias);
+        function agregarTarea() {
+            let textoTarea = document.getElementById("nuevaTarea").value;
+            if (textoTarea === "") return; // No guardar vacíos
 
-        // Cargar preferencias al abrir la página
-        window.addEventListener('DOMContentLoaded', cargarPreferencias);
+            let tareas = obtenerArrayTareas(); // 1. Bajamos la lista actual
+
+            // 2. Creamos el objeto tarea
+            let nuevaTareaObj = {
+                nombre: textoTarea,
+                fecha: new Date().toLocaleTimeString() // Guardamos la hora por ejemplo
+            };
+
+            tareas.push(nuevaTareaObj); // 3. Añadimos al array
+
+            // Convertimos a texto y subimos a localStorage
+            localStorage.setItem("listaTareas", JSON.stringify(tareas));
+
+            document.getElementById("nuevaTarea").value = "";
+            dibujarTareas();
+        }
+        function dibujarTareas() {
+            let listaHtml = document.getElementById("listaTareas");
+            listaHtml.innerHTML = ""; // Limpiamos la lista visual
+
+            let tareas = obtenerArrayTareas();
+
+            // Recorremos el array
+            for (let i = 0; i < tareas.length; i++) {
+                let tarea = tareas[i];
+
+                // Creamos el elemento de la lista
+                let elemento = document.createElement("li");
+                elemento.className = "list-group-item d-flex justify-content-between align-items-center";
+
+                // Escribimos el nombre de la tarea y añadimos el botón de borrar
+                elemento.innerHTML = `
+            ${tarea.nombre}
+            <button class="btn btn-danger btn-sm" onclick="borrarTarea(${i})">X</button>
+        `;
+
+                listaHtml.appendChild(elemento);
+            }
+        }
+        function borrarTarea(indice) {
+            let tareas = obtenerArrayTareas(); // 1. Traemos las tareas
+
+            // Borramos la tarea que está en la posición 'indice'
+            
+            tareas.splice(indice, 1);
+
+            // Guardamos la nueva lista en localStorage
+            localStorage.setItem("listaTareas", JSON.stringify(tareas));
+
+            // Volvemos a dibujar la lista para que desaparezca de la pantalla
+            dibujarTareas();
+        }
+
+
+
+        // Aquí llamamos a todas las funciones de "cargar"
+        window.onload = function () {
+            cargarPreferencias();
+            cargarContador();
+            cargarSesion();
+            mostrarComparativa();
+            dibujarTareas();
+        };
+
+
+        // Esto detecta si otra pestaña cambió algo y actualiza la lista
+        window.addEventListener('storage', function (event) {
+            dibujarTareas();
+            cargarPreferencias();
+        });
+
     </script>
 </body>
+
 </html>
